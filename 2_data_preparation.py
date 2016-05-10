@@ -57,7 +57,7 @@ for fol in range(len(paths)):
         #Labels = np.concatenate((Labels,np.zeros(len(files))+k),axis=0)
         Labels = np.concatenate((Labels,np.zeros(len(files))+fol+1),axis=0)
         for fil in range(len(files)):
-            images_data[:,:,0,fil] = scipy.misc.imread(files[0])
+            images_data[:,:,0,fil] = scipy.misc.imread(files[fil])
         Images = np.concatenate((Images,images_data),axis=3)    
 Images = np.swapaxes(Images,2,1)
 Images = np.swapaxes(Images,3,0)
