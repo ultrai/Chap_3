@@ -17,6 +17,9 @@ Classification of retinal data Normal, AMD and DME
 ## Dataset
 Prof. Sina Farsiu's team (Duke) and Pratul Srinivasan has generously made the data available [here!](http://people.duke.edu/~sf59/Srinivasan_BOE_2014_dataset.htm)
 
+## Benchmark 
+[main_benchmark.m](https://www.osapublishing.org/boe/abstract.cfm?uri=boe-5-10-3568)
+
 ## Pretrained model preparation
 1. git clone https://github.com/soumith/inception.torch
 2. cp  prepare_model.lua incepion.torch/
