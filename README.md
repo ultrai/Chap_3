@@ -11,7 +11,7 @@ Classification of retinal data Normal, AMD and DME
 ## Dependencies
 1. [Piotr's Image & Video Matlab Toolbox](https://github.com/pdollar/toolbox) 
 2. [Structured Edge Detection Toolbox ](https://github.com/pdollar/edges)
-
+3. [Pretrained GoogLeNet](https://github.com/soumith/inception.torch)
 ## Dataset
 Prof. Sina Farsiu's team (Duke) and Pratul Srinivasan has generously made the data available [here!](http://people.duke.edu/~sf59/Srinivasan_BOE_2014_dataset.htm)
 
