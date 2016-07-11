@@ -17,7 +17,7 @@ Classification of retinal data Normal, AMD and DME
 ## Dataset
 Prof. Sina Farsiu's team (Duke) and Pratul Srinivasan has generously made the data available [here!](http://people.duke.edu/~sf59/Srinivasan_BOE_2014_dataset.htm)
 
-## Model preparation
+## Pretrained model preparation
 1. git clone https://github.com/soumith/inception.torch
 2. cp  prepare_model.lua incepion.torch/
 3. cd incepion.toch
@@ -25,7 +25,7 @@ Prof. Sina Farsiu's team (Duke) and Pratul Srinivasan has generously made the da
 
 This creates inception.t7 in working directory
 
-## Data preparation 
+## Data preparation + fine-tuning+ testing
 1_main_train: Preprocess training data. 
 
 1_main_test: Preprocess training data.
