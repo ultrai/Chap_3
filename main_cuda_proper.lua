@@ -7,7 +7,7 @@ require 'math'
 require 'cutorch'
 torch.setdefaulttensortype('torch.FloatTensor')
 torch.manualSeed(27)
-cutorch.setDevice(3)
+cutorch.setDevice(1)
 model = torch.load('inception.t7')
 
 --[[model  
@@ -115,6 +115,7 @@ func = function(x)
             model:backward(inputs, df_do)
  	    collectgarbage()
 table.insert(train_loss,f)
+if ee==1 then
         out_test = torch.zeros(inputs_test:size(1))
         for i = 1,inputs_test:size(1) do
             output = model:forward(X_test[{{i},{},{},{}}]:cuda())
@@ -122,15 +123,17 @@ table.insert(train_loss,f)
  	    collectgarbage()
         end
 
-acc = torch.sum(torch.eq(out_test:float(), outputs_test))/outputs_test:size(1)
+        acc = torch.sum(torch.eq(out_test:float(), outputs_test))/outputs_test:size(1)
+table.insert(test,acc)
 
+end
 
 
 if Acc<acc then
 E = neval
 Acc = acc
-Model = model:clone():float()
-torch.save('Model_backup.t7',Model)
+--Model = model:clone():float()
+--torch.save('Model_backup.t7',Model:clearstate())
 end
 print('error  ',f,'   current acc   ',acc,'  iter  ', neval,  'elapsed   ',sys:toc(),'s',' best acc  ',Acc,'   at  ',E,'  iteration' )
 
@@ -154,30 +157,88 @@ maxIter = 100,}
 
 optimMethod = optim.adagrad--sgd--adadelta--cg--adam--adagrad--
 neval = 0
-batch = 8--64
+batch = 64--8--64
 inputs_test = X_test
 outputs_test = Y_test
 Acc = 0
 parameters,gradParameters = model:getParameters()
 Feat_test = X_test:clone()        
-     
-for epcoh = 1,30 do
+ out_test = torch.zeros(inputs_test:size(1))
+        for i = 1,inputs_test:size(1) do
+            output = model:forward(X_test[{{i},{},{},{}}]:cuda())
+            oo,out_test[i] = torch.max(output[1]:float(),1)
+ 	    collectgarbage()
+        end
+
+        acc = torch.sum(torch.eq(out_test:float(), outputs_test))/outputs_test:size(1)
+  table.insert(test,acc)   
+for epcoh = 1,50 do
+ee = 1
    for temp = 1,X_train:size(1)-batch,batch do
 --         print(temp)
         inputs = X_train[{{temp,temp+batch},{},{},{}}]:cuda()
         outputs = Y_train[{{temp,temp+batch}}]:cuda()
         optimMethod(func, parameters,state)
+ee=ee+1
    end
 inputs = X_train[{{X_train:size(1)-batch,X_train:size(1)},{},{},{}}]:cuda()
 outputs = Y_train[{{X_train:size(1)-batch,X_train:size(1)}}]:cuda()
 optimMethod(func, parameters,state)
 end
 
+
+idx_test = data['Sub_idx_test']
+idx_test = idx_test:float():reshape(X_test:size(1))--:add(1)
+out_test = torch.zeros(Y_test:size(1))
+        for i = 1,Y_test:size(1) do
+            output = model:forward(X_test[{{i},{},{},{}}]:cuda())
+            oo,out_test[i] = torch.max(output[1]:float(),1)
+ 	    collectgarbage()
+        end
+
+idx_test = idx_test[torch.ge(idx_test,2)]
+D = torch.zeros(15,3)
+for sub_test = 9,15 do
+    Y_Test = Y_test[torch.eq(idx_test,sub_test)]
+    est = out_test[torch.eq(idx_test,sub_test)]
+    est_1 = torch.eq(torch.mode(est[torch.eq(Y_Test,1)]),1)
+    D[{{sub_test},{1}}] = est_1
+    est_2 = torch.eq(torch.mode(est[torch.eq(Y_Test,2)]),2)
+    D[{{sub_test},{2}}] = est_2
+    est_3 = torch.eq(torch.mode(est[torch.eq(Y_Test,3)]),3)
+    D[{{sub_test},{3}}] = est_3
+end
+print(D)
+D2 = torch.zeros(15,3)
+for sub_test = 9,15 do
+    Y_Test = Y_test[torch.eq(idx_test,sub_test)]
+    est = out_test[torch.eq(idx_test,sub_test)]
+    est_1 = torch.eq(est[torch.eq(Y_Test,1)],1):float():div(torch.eq(Y_Test,1):sum()):sum()
+    D2[{{sub_test},{1}}] = est_1
+    est_2 = torch.eq(est[torch.eq(Y_Test,2)],2):float():div(torch.eq(Y_Test,2):sum()):sum()
+    D2[{{sub_test},{2}}] = est_2
+    est_3 = torch.eq(est[torch.eq(Y_Test,3)],3):float():div(torch.eq(Y_Test,3):sum()):sum()
+    D2[{{sub_test},{3}}] = est_3
+end
+print(D2)
+require 'csvigo'
+loss = {data = train_loss}
+csvigo.save{path='/home/raj/Data/train_proper_loss.txt',data=loss}
+accu = {data = test}
+csvigo.save{path='/home/raj/Data/test_proper_acc.txt',data=accu}
+torch.save('Model.t7',model)
+--[[
+D = {data = D}
+csvigo.save{path='/home/raj/Data/test_proper_D.txt',data=D}
+D2 = {data = D2}
+csvigo.save{path='/home/raj/Data/test_proper_D2.txt',data=D2}
+
+torch.save('Model_proper.t7',model)
 train_loss = torch.Tensor(train_loss)
 train = torch.Tensor(train)
 test = torch.Tensor(test)
-torch.save('train_loss',train_loss)
+torch.save('train_loss_proper',train_loss)
 torch.save('train',train)
-torch.save('test ',test)
+torch.save('test_proper',test)
 torch.save('Model.t7',model)
-
+]]--
