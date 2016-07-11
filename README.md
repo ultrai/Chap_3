@@ -14,3 +14,14 @@ Classification of retinal data Normal, AMD and DME
 
 ## Dataset
 Prof. Sina Farsiu's team (Duke) and Pratul Srinivasan has generously made the data available [here!](http://people.duke.edu/~sf59/Srinivasan_BOE_2014_dataset.htm)
+
+## Data preparation 
+1_main_train: Preprocess training data
+1_main_test: Preprocess training data 
+or 
+1_main_train_unprocess: Only resizing of train data
+1_main_test_unprocess: Only resizing of test data
+
+2_data.py: Creates labels corresponding to traina dn test data, randomizes train data, Compute mean image. and saves in a hdf5 file
+
+3_main .py: Creates labels corresponding to traina dn test data, randomizes train data, Compute mean image. and saves in a hdf5 file
