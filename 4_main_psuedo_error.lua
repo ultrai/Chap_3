@@ -48,6 +48,7 @@ test_3 = data['test_3']:mul(255)
 ind =  (data['ind']):add(1)
 
 --Images = test_2[{{ind[1]},{},{},{}}]:cuda()
+--Images = test_2[{{93},{},{},{}}]:cuda()
 Images = test_3[{{11},{},{},{}}]:cuda()
 parameters,gradParameters = model_2:getParameters()
 state={}
