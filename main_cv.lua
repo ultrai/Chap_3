@@ -214,4 +214,4 @@ Decis[{{},{1}}] = torch.eq(Deci[{{},{1}}],1)
 Decis[{{},{2}}] = torch.eq(Deci[{{},{2}}],2)
 Decis[{{},{3}}] = torch.eq(Deci[{{},{3}}],3)
 
-print(Decis:float():mena())
+print(Decis:float():mean(1))
