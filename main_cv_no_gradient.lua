@@ -118,11 +118,11 @@ idx_test = data['Sub_idx_test']
 idx_test = idx_test:float():reshape(X_test:size(1))--:add(1)
 out_test = torch.zeros(Y_test:size(1))
        for i = 1,inputs_test:size(1)-batch,batch do
-            output = model:forward(X_test[{{i,i+batch},{},{},{}}]:cuda())
+            output = model:forward(Model:forward(X_test[{{i,i+batch},{},{},{}}]:cuda()))
             oo,out_test[{{i,i+batch}}] = torch.max(output:float(),2)
  	    collectgarbage()
         end
-            output = model:forward(X_test[{{X_test:size(1)-batch,X_test:size(1)},{},{},{}}]:cuda())
+            output = model:forward(Model:forward(X_test[{{X_test:size(1)-batch,X_test:size(1)},{},{},{}}]:cuda()))
             oo,out_test[{{X_test:size(1)-batch,X_test:size(1)}}] = torch.max(output:float(),2)
  	    collectgarbage()
 
