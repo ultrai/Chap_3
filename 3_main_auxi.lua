@@ -116,14 +116,14 @@ func = function(x)
  	    collectgarbage()
 table.insert(train_loss,f)
 if ee==1 then
- --model:evaluate()
+ model:evaluate()
         out_test = torch.zeros(inputs_test:size(1))
         for i = 1,inputs_test:size(1) do
             output = model:forward(X_test[{{i},{},{},{}}]:cuda())
             oo,out_test[i] = torch.max(output[1]:float(),1)
  	    collectgarbage()
         end
---model:training()
+model:training()
         acc = torch.sum(torch.eq(out_test:float(), outputs_test))/outputs_test:size(1)
 table.insert(test,acc)
 
@@ -187,7 +187,7 @@ outputs = Y_train[{{X_train:size(1)-batch,X_train:size(1)}}]:cuda()
 optimMethod(func, parameters,state)
 end
 
---model:evaluate()
+model:evaluate()
 idx_test = data['Sub_idx_test']
 idx_test = idx_test:float():reshape(X_test:size(1))--:add(1)
 out_test = torch.zeros(Y_test:size(1))
