@@ -73,10 +73,10 @@ model:evaluate()
             oo,out_test[i] = torch.max(output:float(),1)
  	    collectgarbage()
         end
-
+model:training()
 acc = torch.sum(torch.eq(out_test:float(), Y_test))/Y_test:size(1)
 table.insert(test,acc)
-model:training()
+
 end
 
 
@@ -139,6 +139,7 @@ inputs = X_train[{{X_train:size(1)-batch,X_train:size(1)},{},{},{}}]
 outputs = Y_train[{{X_train:size(1)-batch,X_train:size(1)}}]
 optimMethod(func, parameters,state)
 end
+model:evaluate()
 
 out_test = torch.zeros(Y_test:size(1))
         for i = 1,Y_test:size(1) do
