@@ -15,7 +15,7 @@ net:remove(24)
 net:remove(24)
 net:remove(24)
 torch.save('../inception.t7',net)
-local googlenet = dofile('googlenet2.lua')
+--[[local googlenet = dofile('googlenet2.lua')
 local net = googlenet({
   cudnn.SpatialConvolution,
   cudnn.SpatialMaxPooling,
@@ -27,4 +27,4 @@ net:remove(24)
 net:remove(24)
 net:remove(24)
 torch.save('../inception2.t7',net)
-
+]]--
