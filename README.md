@@ -46,3 +46,15 @@ or
 4_ main_psuedo_error: identified indexes of representative response at each layer and saves in error folder.
 
 5_ representative_responses: vizualization of representative responses.
+
+## Cross-validation
+
+
+| Class weights | loss weights  | Decision pooling accuracy  |
+| ------------- |:-------------:| -----:|
+| 0.3	0.3	0.4   | 1	1	1         | 0.99	0.89	0.84 |
+| 0.3	0.3	0.4   | 1	0.1	0.0001  | 0.99	0.89	0.86 |
+| 0.2	0.2	0.6   | 1	1.00E-07	1.00E-14 | 0.98	0.85	0.81 |
+| 0.33	0.33	0.33 | 1	1	1     | 1   	0.88	0.81 |
+| 0.33	0.33	0.33 | 1	0.0	0.0 | 0.98  0.85	0.85 |
+
