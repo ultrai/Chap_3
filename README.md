@@ -48,7 +48,7 @@ or
 5_ representative_responses: vizualization of representative responses.
 
 ## Cross-validation
-
+https://github.com/ultrai/Chap_3/blob/master/main_cuda_proper_cv.lua#L55-L58
 
 | Class weights | loss weights  | Decision pooling accuracy  |
 | ------------- |:-------------:| -----:|
