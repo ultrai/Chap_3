@@ -41,7 +41,7 @@ for sub = 1:15
     images = zeros(r,2*c,numel(files)); % 496,512
     parfor i = 1:numel(files)
         ii = imread([d,'/Test/AMD',num2str(sub),'/TIFFs/8bitTIFFs/',files(i).name]);
-         ii = preprocess(ii);ii = imresize(ii(:,:,1),[s1,s2]);ii(ii == 255)=10;
+        ii(ii == 255)=10; ii = preprocess(ii);ii = imresize(ii(:,:,1),[s1,s2]);
         [~,images(:,:,i)] = BM3D(dummy,ii((round(0.7*s1)-r+1+5):round(0.7*s1+5),(round(0.5*s2)-c+1):(round(0.5*s2)+c)));
 % images(:,:,i) = mat2gray(images(:,:,i));
         close all
