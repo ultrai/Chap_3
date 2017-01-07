@@ -44,14 +44,15 @@ model:cuda():clearState()
 model_2 = model:clone()
 model_2:cuda()
 
-test_2 = data['test_2']:mul(255)
+--test_2 = data['test_2']:mul(255)
+test_image = data['test_3_images']
 test_3 = data['test_3']:mul(255)
 ind =  (data['ind']):add(1)
 
-test_image = data['test_2_images']
-for Idx = 1,360 do
+
+for Idx = 1,150 do
 ind[1] = Idx
-Images = test_2[{{ind[1]},{},{},{}}]:cuda()
+Images = test_3[{{ind[1]},{},{},{}}]:cuda()
 --Images = test_2[{{93},{},{},{}}]:cuda()
 --Images = test_3[{{11},{},{},{}}]:cuda()
 parameters,gradParameters = model_2:getParameters()
@@ -151,6 +152,7 @@ matio.save(paths.cwd() .. '/grads/resp_' .. Idx .. '_' .. temp .. '.mat', Respon
 matio.save(paths.cwd() .. '/grads/Resp_' .. Idx .. '_' .. temp .. '.mat', Responses[temp][1])
 end
 
-matio.save(paths.cwd() .. '/grads/image_' .. Idx .. '.mat',test_image[Idx])
-
+matio.save(paths.cwd() .. '/grads/image_' .. Idx .. '.mat',test_image[ind[1]])
+--matio.save(paths.cwd() .. '/grads/image_' .. Idx .. '_1.mat',test_2[ind[1]][1])
+--matio.save(paths.cwd() .. '/grads/image_' .. Idx .. '_1.mat',torch.max(Responses[2][1],1))
 end

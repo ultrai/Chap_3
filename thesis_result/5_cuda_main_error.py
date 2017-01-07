@@ -11,11 +11,47 @@ from skimage import io
 import scipy.io as sio
 import scipy.misc as im 
 min_max_scaler = preprocessing.MinMaxScaler()
-images = {2,3}
-for Idx in range(1,360):
+# AMD
+images = {2,3,10,17,38,54,60,65,131,141,93,1}
+# DME
+images = {7,11,13,71,73,84,85,94,95,98,105}
+
+for Idx in images:
+    res = sio.loadmat('grads/image_'+str(Idx)+'.mat')['x']
+    image.imsave('responses/'+str(Idx)+"I.png", res.swapaxes(0,2).swapaxes(0,1))     
+for Idx in images:
+    res = sio.loadmat('grads/image_'+str(Idx)+'_1.mat')['x']
+    image.imsave('responses/'+str(Idx)+"I_1.png", res[0,:,:])     
+
+for temp in range(1,21):
+    res = sio.loadmat('grads/resp_'+str(94)+'_'+str(temp+1)+'.mat')['x']
+    image.imsave('responses/'+str(94)+'_'+str(temp)+".png", im.imresize(res[:,:],[224,224])) 
+for temp in range(2,21):
+    res = sio.loadmat('grads/Resp_'+str(98)+'_'+str(temp+1)+'.mat')['x']
+    image.imsave('responses/'+str(98)+'_'+str(temp)+".png", im.imresize(res.max(axis=0),[224,224])) 
+
+for Idx in range(1,150):
+    res = sio.loadmat('grads/resp_'+str(Idx)+'_1.mat')['x']
+    image.imsave('responses/'+str(Idx)+"I_1.png", im.imresize(res[:,:],[224,224]))   
+
+"""
+for Idx in range(1,151):
+    res = sio.loadmat('grads/image_'+str(Idx)+'.mat')['x']
+    image.imsave('responses/'+str(Idx)+"I.png", res.swapaxes(0,2).swapaxes(0,1))    
+"""
+for Idx in range(1,151):
     res = sio.loadmat('grads/image_'+str(Idx)+'.mat')['x']
     image.imsave('responses/'+str(Idx)+"I.png", res.swapaxes(0,2).swapaxes(0,1))     
 
+for Idx in images:
+    temp =2
+    res = sio.loadmat('grads/resp_'+str(Idx)+'_'+str(temp+1)+'.mat')['x']
+    image.imsave('responses/'+str(Idx)+'_'+str(temp)+".png", im.imresize(res,[224,224])) 
+Idx= 93
+for temp in range(1,21):
+    res = sio.loadmat('grads/resp_'+str(Idx)+'_'+str(temp+1)+'.mat')['x']
+    image.imsave('responses/000'+str(Idx)+'_'+str(temp)+".png", im.imresize(res,[224,224])) 
+     
 for Idx in images:
 	for temp in range(1,21):
           res = sio.loadmat('grads/resp_'+str(Idx)+'_'+str(temp+1)+'.mat')['x']
