@@ -147,7 +147,7 @@ inception9conv(832,384,1,1):ReLU,conv(832,192,1,1):Relu:conv(192,384,3,3,pad):Re
 lis = {1,1,1,1,2,2,3,3,3,3,4,5,5,6,7,8,9,10,10,11,12}
 for temp =1,21 do
 matio.save(paths.cwd() .. '/grads_AMD/grad_' .. Idx .. '_' .. temp .. '.mat', Grad[lis[temp]])
-oo,n = torch.max(Grad[lis[temp]],1)
+oo,n = torch.min(Grad[lis[temp]],1)
 matio.save(paths.cwd() .. '/grads_AMD/resp_' .. Idx .. '_' .. temp .. '.mat', Responses[temp][1][n[1]])
 matio.save(paths.cwd() .. '/grads_AMD/Resp_' .. Idx .. '_' .. temp .. '.mat', Responses[temp][1])
 end
