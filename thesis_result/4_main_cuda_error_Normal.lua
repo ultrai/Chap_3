@@ -146,13 +146,13 @@ inception9conv(832,384,1,1):ReLU,conv(832,192,1,1):Relu:conv(192,384,3,3,pad):Re
 ]]--
 lis = {1,1,1,1,2,2,3,3,3,3,4,5,5,6,7,8,9,10,10,11,12}
 for temp =1,21 do
-matio.save(paths.cwd() .. '/grads_AMD/grad_' .. Idx .. '_' .. temp .. '.mat', Grad[lis[temp]])
+matio.save(paths.cwd() .. '/grads_Normal/grad_' .. Idx .. '_' .. temp .. '.mat', Grad[lis[temp]])
 oo,n = torch.min(Grad[lis[temp]],1)
-matio.save(paths.cwd() .. '/grads_AMD/resp_' .. Idx .. '_' .. temp .. '.mat', Responses[temp][1][n[1]])
-matio.save(paths.cwd() .. '/grads_AMD/Resp_' .. Idx .. '_' .. temp .. '.mat', Responses[temp][1])
+matio.save(paths.cwd() .. '/grads_Normal/resp_' .. Idx .. '_' .. temp .. '.mat', Responses[temp][1][n[1]])
+matio.save(paths.cwd() .. '/grads_Normal/Resp_' .. Idx .. '_' .. temp .. '.mat', Responses[temp][1])
 end
 
-matio.save(paths.cwd() .. '/grads_AMD/image_' .. Idx .. '.mat',test_image[ind[1]])
+matio.save(paths.cwd() .. '/grads_Normal/image_' .. Idx .. '.mat',test_image[ind[1]])
 --matio.save(paths.cwd() .. '/grads/image_' .. Idx .. '_1.mat',test_2[ind[1]][1])
 --matio.save(paths.cwd() .. '/grads/image_' .. Idx .. '_1.mat',torch.max(Responses[2][1],1))
 end
